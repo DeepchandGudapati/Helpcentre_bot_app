@@ -58,11 +58,6 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-# Streamlit app content
-st.title("Facebook-like Streamlit App")
-st.write("This is a Streamlit app with a Facebook-like theme.")
-st.button("Click Me")
-
 # Load your dataset
 data = pd.read_excel("bot.xlsx")
 
