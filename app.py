@@ -64,6 +64,9 @@ data = pd.read_excel("bot.xlsx")
 
 st.title("Get help center Links")
 
+# Initialize suggestions with an empty list
+suggestions = []
+
 # User input for description
 user_input = st.text_input("Enter description:")
 
