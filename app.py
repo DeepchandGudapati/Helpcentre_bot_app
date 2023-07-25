@@ -97,14 +97,25 @@ st.markdown(
     f"""
     <script>
     var input = document.querySelector('.stTextInput input');
-    var suggestions = {suggestions_json};
 
-    input.addEventListener('input', function() {{
-        var val = this.value;
+    // Function to update suggestions
+    function updateSuggestions(val) {{
         var newSuggestions = suggestions.filter(function(suggestion) {{
             return suggestion.toLowerCase().includes(val.toLowerCase());
         }});
         Streamlit.setComponentValue(newSuggestions);
+    }}
+
+    // Handle input event
+    input.addEventListener('input', function(event) {{
+        var val = event.target.value;
+        updateSuggestions(val);
+    }});
+
+    // Handle change event (when user selects a suggestion)
+    input.addEventListener('change', function(event) {{
+        var val = event.target.value;
+        updateSuggestions(val);
     }});
     </script>
     """,
