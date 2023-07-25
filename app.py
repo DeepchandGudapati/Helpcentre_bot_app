@@ -63,8 +63,8 @@ data = pd.read_excel("bot.xlsx")
 
 st.title("Get help center Links")
 
-# User input for description
-user_input = st.text_input("Enter description:")
+# Autocomplete input for description
+user_input = st.autocomplete_input("Enter description:", data["description"].tolist())
 
 # Search suggestions based on the available descriptions
 if user_input:
