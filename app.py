@@ -3,6 +3,7 @@ import streamlit as st
 import requests
 from bs4 import BeautifulSoup
 from fuzzywuzzy import process
+import json
 
 # Custom CSS
 st.markdown(
@@ -88,21 +89,20 @@ if user_input:
         st.warning("No link found for the provided description.")
 
 # JavaScript to add autocomplete functionality
+suggestions_json = json.dumps(suggestions)
 st.markdown(
-    """
+    f"""
     <script>
     var input = document.querySelector('.stTextInput input');
-    var suggestions = %s;
+    var suggestions = {suggestions_json};
 
-    input.addEventListener('input', function() {
+    input.addEventListener('input', function() {{
         var val = this.value;
-        var newSuggestions = suggestions.filter(function(suggestion) {
+        var newSuggestions = suggestions.filter(function(suggestion) {{
             return suggestion.toLowerCase().includes(val.toLowerCase());
-        });
+        }});
         Streamlit.setComponentValue(newSuggestions);
-    });
+    }});
     </script>
     """
-    % suggestions,
-    unsafe_allow_html=True,
 )
