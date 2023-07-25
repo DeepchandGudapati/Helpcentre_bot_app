@@ -76,7 +76,9 @@ if user_input:
     suggestions = [suggestion[0] for suggestion in suggestions if suggestion[1] >= 80]
     st.write("Search Suggestions:")
     st.write(suggestions)
-
+    # Display suggestions as clickable links
+    for suggestion in suggestions:
+        st.markdown(f"[{suggestion}](#{suggestion.lower().replace(' ', '-')})")
 # Find the link corresponding to the description
 if user_input:
     filtered_data = data[data["description"].str.contains(user_input, case=False)]
