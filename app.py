@@ -61,7 +61,7 @@ st.markdown(
 # Load your dataset
 data = pd.read_excel("bot.xlsx")
 
-st.title("Bot: Get Links by Description")
+st.title("Get help center Links")
 
 # User input for description
 user_input = st.text_input("Enter description:")
