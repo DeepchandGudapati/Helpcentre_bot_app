@@ -59,7 +59,7 @@ st.markdown(
 )
 
 # Load your dataset
-data = pd.read_excel("bot.xlsx")
+data = pd.read_excel("your_dataset.xlsx")
 
 st.title("Bot: Get Links by Description")
 
@@ -72,8 +72,8 @@ if user_input:
     suggestions = [suggestion[0] for suggestion in suggestions if suggestion[1] >= 80]
     # Remove double quotes from suggestions
     suggestions = [suggestion.replace('"', '') for suggestion in suggestions]
-    st.write("Search Suggestions:")
-    st.write(suggestions)
+    st.text("Search Suggestions:")
+    st.text(suggestions)
 
 # Find the link corresponding to the description
 if user_input:
