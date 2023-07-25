@@ -1,5 +1,6 @@
 import pandas as pd
 import streamlit as st
+import openpyxl
 
 # Load your dataset
 data = pd.read_excel("bot.xlsx")
