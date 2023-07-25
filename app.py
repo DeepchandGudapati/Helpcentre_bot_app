@@ -70,10 +70,8 @@ user_input = st.text_input("Enter description:")
 if user_input:
     suggestions = process.extract(user_input, data["description"], limit=5)
     suggestions = [suggestion[0] for suggestion in suggestions if suggestion[1] >= 80]
-    # Remove double quotes from suggestions
-    suggestions = [suggestion.replace('"', '') for suggestion in suggestions]
-    st.text("Search Suggestions:")
-    st.text(suggestions)
+    st.write("Search Suggestions:")
+    st.write(suggestions)
 
 # Find the link corresponding to the description
 if user_input:
