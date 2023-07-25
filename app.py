@@ -64,9 +64,6 @@ data = pd.read_excel("bot.xlsx")
 
 st.title("Get help center Links")
 
-# Initialize suggestions with an empty list
-suggestions = []
-
 # User input for description
 user_input = st.text_input("Enter description:")
 
@@ -75,10 +72,9 @@ if user_input:
     suggestions = process.extract(user_input, data["description"], limit=5)
     suggestions = [suggestion[0] for suggestion in suggestions if suggestion[1] >= 80]
     st.write("Search Suggestions:")
-    st.write(suggestions)
-    # Display suggestions as clickable links
-    for suggestion in suggestions:
-        st.markdown(f"[{suggestion}](#{suggestion.lower().replace(' ', '-')})")
+    st.markdown("<br>".join(f"[{suggestion}](#{suggestion.lower().replace(' ', '-')})" for suggestion in suggestions),
+                unsafe_allow_html=True)
+
 # Find the link corresponding to the description
 if user_input:
     filtered_data = data[data["description"].str.contains(user_input, case=False)]
@@ -93,27 +89,20 @@ if user_input:
     else:
         st.warning("No link found for the provided description.")
 
-# JavaScript to add autocomplete functionality
-suggestions_json = json.dumps(suggestions)
-st.markdown(
-    f"""
-    <script>
-    var input = document.querySelector('.stTextInput input');
-    var suggestions = {suggestions_json};
-
-    input.addEventListener('input', function(event) {{
-        var val = event.target.value;
-        var newSuggestions = suggestions.filter(function(suggestion) {{
-            return suggestion.toLowerCase().includes(val.toLowerCase());
+# JavaScript to add click event handling for suggestions
+if suggestions:
+    suggestions_json = json.dumps(suggestions)
+    st.markdown(
+        f"""
+        <script>
+        var suggestions = {suggestions_json};
+        document.addEventListener("click", function(event) {{
+            var target = event.target;
+            if (target.tagName === 'A' && suggestions.includes(target.innerText)) {{
+                document.querySelector('.stTextInput input').value = target.innerText;
+            }}
         }});
-        Streamlit.setComponentValue(newSuggestions);
-    }});
-
-    input.addEventListener('change', function(event) {{
-        var val = event.target.value;
-        Streamlit.setComponentValue(val);
-    }});
-    </script>
-    """,
-    unsafe_allow_html=True,
-)
+        </script>
+        """,
+        unsafe_allow_html=True,
+    )
