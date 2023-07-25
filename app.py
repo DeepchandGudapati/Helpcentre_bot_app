@@ -104,5 +104,6 @@ st.markdown(
         Streamlit.setComponentValue(newSuggestions);
     }});
     </script>
-    """
+    """,
+    unsafe_allow_html=True,
 )
