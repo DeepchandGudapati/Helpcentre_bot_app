@@ -5,7 +5,7 @@ import openpyxl
 # Load your dataset
 data = pd.read_excel("bot.xlsx")
 
-st.title("Get HC Links by Description")
+st.title("Get Help center articles")
 
 # User input for description
 user_input = st.text_input("Enter description:")
