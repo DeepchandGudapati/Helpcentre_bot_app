@@ -72,8 +72,10 @@ if user_input:
     suggestions = process.extract(user_input, data["description"], limit=5)
     suggestions = [suggestion[0] for suggestion in suggestions if suggestion[1] >= 80]
     st.write("Search Suggestions:")
-    st.markdown("<br>".join(f"[{suggestion}](#{suggestion.lower().replace(' ', '-')})" for suggestion in suggestions),
-                unsafe_allow_html=True)
+    # Display suggestions as hyperlinks
+    for suggestion in suggestions:
+        link = data.loc[data["description"] == suggestion, "link"].iloc[0]
+        st.markdown(f"[{suggestion}]({link})", unsafe_allow_html=True)
 
 # Find the link corresponding to the description
 if user_input:
@@ -88,21 +90,3 @@ if user_input:
 
     else:
         st.warning("No link found for the provided description.")
-
-# JavaScript to add click event handling for suggestions
-if suggestions:
-    suggestions_json = json.dumps(suggestions)
-    st.markdown(
-        f"""
-        <script>
-        var suggestions = {suggestions_json};
-        document.addEventListener("click", function(event) {{
-            var target = event.target;
-            if (target.tagName === 'A' && suggestions.includes(target.innerText)) {{
-                document.querySelector('.stTextInput input').value = target.innerText;
-            }}
-        }});
-        </script>
-        """,
-        unsafe_allow_html=True,
-    )
