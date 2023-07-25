@@ -4,6 +4,65 @@ import requests
 from bs4 import BeautifulSoup
 from fuzzywuzzy import process
 
+# Custom CSS
+st.markdown(
+    """
+    <style>
+    /* Body background color */
+    body {
+        background-color: #f0f2f5;
+    }
+
+    /* Container width and alignment */
+    .stApp {
+        max-width: 960px; /* Adjust to your preference */
+        margin: 0 auto;
+    }
+
+    /* Main container background and border radius */
+    .stApp div[data-testid="stDecoration"] {
+        background-color: #ffffff;
+        border-radius: 8px; /* Adjust to your preference */
+        padding: 16px; /* Adjust to your preference */
+    }
+
+    /* Header background color */
+    .stApp div[data-testid="stSessionInfo"] {
+        background-color: #1877f2; /* Facebook blue */
+    }
+
+    /* Header text color */
+    .stApp div[data-testid="stSessionInfo"] span {
+        color: #ffffff; /* White text */
+    }
+
+    /* Widget styles */
+    .stButton {
+        background-color: #1877f2; /* Facebook blue */
+        color: #ffffff; /* White text */
+        border-radius: 8px; /* Rounded corners */
+        padding: 8px 16px; /* Adjust to your preference */
+    }
+
+    .stTextInput {
+        border-radius: 8px; /* Rounded corners */
+    }
+
+    /* Custom fonts (adjust font URLs if using custom fonts) */
+    .stApp {
+        font-family: 'Helvetica Neue', Arial, sans-serif;
+    }
+
+    </style>
+    """,
+    unsafe_allow_html=True,
+)
+
+# Streamlit app content
+st.title("Facebook-like Streamlit App")
+st.write("This is a Streamlit app with a Facebook-like theme.")
+st.button("Click Me")
+
 # Load your dataset
 data = pd.read_excel("bot.xlsx")
 
