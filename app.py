@@ -63,8 +63,8 @@ data = pd.read_excel("bot.xlsx")
 
 st.title("Get help center Links")
 
-# Autocomplete input for description
-user_input = st.autocomplete_input("Enter description:", data["description"].tolist())
+# User input for description
+user_input = st.text_input("Enter description:")
 
 # Search suggestions based on the available descriptions
 if user_input:
@@ -84,5 +84,27 @@ if user_input:
         # Fetch webpage content and extract a preview (same as previous implementation)
         # ...
 
+    else:
+        st.warning("No link found for the provided description.")
+
+# JavaScript to add autocomplete functionality
+st.markdown(
+    """
+    <script>
+    var input = document.querySelector('.stTextInput input');
+    var suggestions = %s;
+
+    input.addEventListener('input', function() {
+        var val = this.value;
+        var newSuggestions = suggestions.filter(function(suggestion) {
+            return suggestion.toLowerCase().includes(val.toLowerCase());
+        });
+        Streamlit.setComponentValue(newSuggestions);
+    });
+    </script>
+    """
+    % suggestions,
+    unsafe_allow_html=True,
+)
     else:
         st.warning("No link found for the provided description.")
