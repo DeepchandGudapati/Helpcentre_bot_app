@@ -106,5 +106,3 @@ st.markdown(
     % suggestions,
     unsafe_allow_html=True,
 )
-    else:
-        st.warning("No link found for the provided description.")
