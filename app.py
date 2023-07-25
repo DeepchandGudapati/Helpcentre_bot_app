@@ -59,7 +59,7 @@ st.markdown(
 )
 
 # Load your dataset
-data = pd.read_excel("your_dataset.xlsx")
+data = pd.read_excel("bot.xlsx")
 
 st.title("Bot: Get Links by Description")
 
