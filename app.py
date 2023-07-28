@@ -30,7 +30,7 @@ suggestions_placeholder = st.empty()
 
 # Search suggestions based on the available descriptions
 if user_input:
-    suggestions = process.extract(user_input, data["description"], limit=5)
+    suggestions = process.extract(user_input, data["description"], limit=len(data))
     suggestions = [suggestion[0] for suggestion in suggestions if suggestion[1] >= 80]
     suggestions_placeholder.write("Search Suggestions:")
     # Display suggestions as hyperlinks
