@@ -77,11 +77,15 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
+# Load the splash screen GIF from your GitHub repository
+splash_screen_gif_url = "https://github.com/DeepchandGudapati/bot_app/blob/384a9807205f8df61c101b279f1917d2799097e5/original-4591cc3d8ca4a9f6cbe8081f7c6d16e0.gif"
+st.image(splash_screen_gif_url, use_column_width=True, format="GIF")
+
 # Main app
 st.title("Get help center Links")
 
 # User input for description
-user_input = st.text_input("Enter description:", key="description_input")  # Add key to fix caching issue
+user_input = st.sidebar.text_input("Enter description:", key="description_input")  # Add key to fix caching issue
 
 # Find the link corresponding to the description
 if user_input:
@@ -100,13 +104,12 @@ if user_input:
 # Search suggestions based on the available descriptions
 if user_input:
     suggestions = process.extract(user_input, data["description"], limit=5)
-    suggestions = [suggestion[0] for suggestion in suggestions if suggestion[1] >= 80]
-    st.markdown("<div class='suggestions-container'>", unsafe_allow_html=True)
-    st.write("Search Suggestions:")
+    st.sidebar.markdown("<div class='suggestions-container'>", unsafe_allow_html=True)
+    st.sidebar.write("Search Suggestions:")
     for suggestion in suggestions:
-        link = data.loc[data["description"] == suggestion, "link"].iloc[0]
-        st.markdown(
-            f"<div class='suggestion-link'><a href='{link}'>{suggestion}</a></div>",
+        link = data.loc[data["description"] == suggestion[0], "link"].iloc[0]
+        st.sidebar.markdown(
+            f"<div class='suggestion-link'><a href='{link}'>{suggestion[0]}</a></div>",
             unsafe_allow_html=True,
         )
-    st.markdown("</div>", unsafe_allow_html=True)
+    st.sidebar.markdown("</div>", unsafe_allow_html=True)
