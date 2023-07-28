@@ -6,7 +6,7 @@ from fuzzywuzzy import process
 data = pd.read_excel("bot.xlsx")
 
 # GIF URL from GitHub
-gif_url = "original-4591cc3d8ca4a9f6cbe8081f7c6d16e0.gif"  # Replace with the raw URL of your GIF hosted on GitHub
+gif_url = "https://github.com/DeepchandGudapati/bot_app/blob/384a9807205f8df61c101b279f1917d2799097e5/original-4591cc3d8ca4a9f6cbe8081f7c6d16e0.gif"  # Replace with the raw URL of your GIF hosted on GitHub
 
 # CSS styling to create splash screen and zoom-in effect
 st.markdown(
@@ -55,53 +55,12 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-# Splash screen
-st.markdown(
-    f"""
-    <div class="splash-screen" onclick="hide_splash_screen()">
-        <img src="{gif_url}" alt="Splash Screen GIF" style="max-width: 100%; max-height: 100%;">
-    </div>
-    """,
-    unsafe_allow_html=True,
-)
-
-# Function to show the main app and hide the splash screen on click
-st.markdown(
-    """
-    <script>
-    function hide_splash_screen() {
-        const splashScreen = document.querySelector(".splash-screen");
-        const mainApp = document.querySelector(".main-app");
-
-        mainApp.style.display = "block";
-        splashScreen.classList.add("zoom-in");
-
-        // Remove splash screen after the animation finishes
-        splashScreen.addEventListener("animationend", () => {
-            splashScreen.style.display = "none";
-        });
-    }
-    </script>
-    """,
-    unsafe_allow_html=True,
-)
-
-# Main app
-with st.container():
-    st.markdown(
+# Function to hide the splash screen and display the main app
+def hide_splash_screen():
+    splash_placeholder.empty()
+    main_app_placeholder.markdown(
         """
         <style>
-        /* Styling for main app */
-        .main-app {
-            display: block;
-            transition: opacity 1s ease-in-out;
-        }
-
-        /* Set the opacity of main app to 0 initially */
-        .main-app.hidden {
-            opacity: 0;
-        }
-
         /* Zoom-in animation for main app */
         .main-app.zoom-in {
             animation: zoomInMain 1s ease-in-out;
@@ -119,7 +78,7 @@ with st.container():
             }
         }
         </style>
-        <div class="main-app hidden">
+        <div class="main-app zoom-in">
         """,
         unsafe_allow_html=True,
     )
@@ -158,4 +117,21 @@ with st.container():
             link = data.loc[data["description"] == suggestion, "link"].iloc[0]
             suggestions_placeholder.markdown(f"[{suggestion}]({link})", unsafe_allow_html=True)
 
-    st.markdown("</div>", unsafe_allow_html=True)
+    main_app_placeholder.markdown("</div>", unsafe_allow_html=True)
+
+
+# Splash screen placeholder
+splash_placeholder = st.empty()
+
+# Display the splash screen
+splash_placeholder.markdown(
+    f"""
+    <div class="splash-screen" onclick="hide_splash_screen()">
+        <img src="{gif_url}" alt="Splash Screen GIF" style="max-width: 100%; max-height: 100%;">
+    </div>
+    """,
+    unsafe_allow_html=True,
+)
+
+# Main app placeholder
+main_app_placeholder = st.empty()
