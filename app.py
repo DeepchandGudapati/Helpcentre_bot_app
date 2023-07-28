@@ -64,7 +64,7 @@ data = pd.read_excel("bot.xlsx")
 
 # GIF URL or local file path
 gif_url = "original-4591cc3d8ca4a9f6cbe8081f7c6d16e0.gif"
-st.image(gif_url, format="gif", use_column_width=True)
+st.image(gif_url, use_column_width=True)
 
 st.title("Get help center Links")
 
