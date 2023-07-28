@@ -62,6 +62,10 @@ st.markdown(
 # Load your dataset
 data = pd.read_excel("bot.xlsx")
 
+# GIF URL or local file path
+gif_url = "https://giphy.com/embed/oVCd7vRf5U8vQ8o2NP"  # Replace with your GIF URL or local file path
+
+st.image(gif_url, use_column_width=True)
 st.title("Get help center Links")
 
 # User input for description
