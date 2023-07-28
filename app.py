@@ -100,12 +100,13 @@ if user_input:
 # Search suggestions based on the available descriptions
 if user_input:
     suggestions = process.extract(user_input, data["description"], limit=5)
+    suggestions = [suggestion[0] for suggestion in suggestions if suggestion[1] >= 80]
     st.markdown("<div class='suggestions-container'>", unsafe_allow_html=True)
     st.write("Search Suggestions:")
     for suggestion in suggestions:
-        link = data.loc[data["description"] == suggestion[0], "link"].iloc[0]
+        link = data.loc[data["description"] == suggestion, "link"].iloc[0]
         st.markdown(
-            f"<div class='suggestion-link'><a href='{link}'>{suggestion[0]}</a></div>",
+            f"<div class='suggestion-link'><a href='{link}'>{suggestion}</a></div>",
             unsafe_allow_html=True,
         )
     st.markdown("</div>", unsafe_allow_html=True)
