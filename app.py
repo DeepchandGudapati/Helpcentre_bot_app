@@ -8,7 +8,7 @@ data = pd.read_excel("bot.xlsx")
 # GIF URL from GitHub
 gif_url = "original-4591cc3d8ca4a9f6cbe8081f7c6d16e0.gif"  # Replace with the raw URL of your GIF hosted on GitHub
 
-# CSS styling to create splash screen and zoom-in effect
+# CSS styling to create zoom-in effect for main app
 st.markdown(
     """
     <style>
@@ -17,109 +17,33 @@ st.markdown(
         display: none;
     }
 
-    /* Splash screen styling */
-    .splash-screen {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: 9999;
-        background-color: white;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        opacity: 1;
-        transition: opacity 1s ease-in-out;
-    }
-
-    /* Zoom-in animation for splash screen */
-    .splash-screen.zoom-in {
-        animation: zoomIn 1s ease-in-out;
+    /* Zoom-in animation for main app */
+    .main-app.zoom-in {
+        animation: zoomInMain 1s ease-in-out;
         animation-fill-mode: forwards;
     }
 
-    @keyframes zoomIn {
+    @keyframes zoomInMain {
         0% {
-            transform: scale(2);
-            opacity: 1;
+            transform: scale(0.8);
+            opacity: 0;
         }
         100% {
             transform: scale(1);
-            opacity: 0;
+            opacity: 1;
         }
     }
-
     </style>
     """,
     unsafe_allow_html=True,
 )
 
 # Function to hide the splash screen and display the main app
-st.markdown(
-    """
-    <script>
-    function hide_splash_screen() {
-        const splashScreen = document.querySelector(".splash-screen");
-        const mainApp = document.querySelector(".main-app");
-
-        mainApp.style.display = "block";
-        splashScreen.classList.add("zoom-in");
-
-        // Remove splash screen after the animation finishes
-        splashScreen.addEventListener("animationend", () => {
-            splashScreen.style.display = "none";
-        });
-    }
-    </script>
-    """,
-    unsafe_allow_html=True,
-)
-
-# Display the GIF as a splash screen
-st.markdown(
-    f"""
-    <div class="splash-screen" onclick="hide_splash_screen()">
-        <img src="{gif_url}" alt="Splash Screen GIF" style="max-width: 100%; max-height: 100%;">
-    </div>
-    """,
-    unsafe_allow_html=True,
-)
-
-# Main app
-with st.container():
-    st.markdown(
+def hide_splash_screen():
+    splash_placeholder.empty()
+    main_app_placeholder.markdown(
         """
-        <style>
-        /* Styling for main app */
-        .main-app {
-            display: block;
-            transition: opacity 1s ease-in-out;
-        }
-
-        /* Set the opacity of main app to 0 initially */
-        .main-app.hidden {
-            opacity: 0;
-        }
-
-        /* Zoom-in animation for main app */
-        .main-app.zoom-in {
-            animation: zoomInMain 1s ease-in-out;
-            animation-fill-mode: forwards;
-        }
-
-        @keyframes zoomInMain {
-            0% {
-                transform: scale(0.8);
-                opacity: 0;
-            }
-            100% {
-                transform: scale(1);
-                opacity: 1;
-            }
-        }
-        </style>
-        <div class="main-app hidden">
+        <div class="main-app zoom-in">
         """,
         unsafe_allow_html=True,
     )
@@ -158,4 +82,18 @@ with st.container():
             link = data.loc[data["description"] == suggestion, "link"].iloc[0]
             suggestions_placeholder.markdown(f"[{suggestion}]({link})", unsafe_allow_html=True)
 
-    st.markdown("</div>", unsafe_allow_html=True)
+    main_app_placeholder.markdown("</div>", unsafe_allow_html=True)
+
+
+# Display the GIF as a splash screen with a button to hide it
+splash_placeholder = st.empty()
+
+# Display the GIF
+splash_placeholder.image(gif_url, use_column_width=True)
+
+# Button to hide the splash screen and show the main app
+if splash_placeholder.button("Start App"):
+    hide_splash_screen()
+
+# Placeholder for the main app content
+main_app_placeholder = st.empty()
