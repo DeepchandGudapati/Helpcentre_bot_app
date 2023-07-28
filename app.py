@@ -5,53 +5,53 @@ from bs4 import BeautifulSoup
 from fuzzywuzzy import process
 import json
 
-# Custom CSS
+
+# Load your dataset
+data = pd.read_excel("bot.xlsx")
+
+# GIF URL or local file path
+gif_url = "original-4591cc3d8ca4a9f6cbe8081f7c6d16e0.gif"
+
+# CSS styling to create splash screen and zoom-in effect
 st.markdown(
     """
     <style>
-    /* Body background color */
-    body {
-        background-color: #f0f2f5;
+    /* Hide main app initially */
+    .main-app {
+        display: none;
     }
 
-    /* Container width and alignment */
-    .stApp {
-        max-width: 960px; /* Adjust to your preference */
-        margin: 0 auto;
+    /* Splash screen styling */
+    .splash-screen {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 9999;
+        background-color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        opacity: 1;
+        transition: opacity 1s ease-in-out;
     }
 
-    /* Main container background and border radius */
-    .stApp div[data-testid="stDecoration"] {
-        background-color: #ffffff;
-        border-radius: 8px; /* Adjust to your preference */
-        padding: 16px; /* Adjust to your preference */
+    /* Zoom-in animation for splash screen */
+    .splash-screen.zoom-in {
+        animation: zoomIn 1s ease-in-out;
+        animation-fill-mode: forwards;
     }
 
-    /* Header background color */
-    .stApp div[data-testid="stSessionInfo"] {
-        background-color: #1877f2; /* Facebook blue */
-    }
-
-    /* Header text color */
-    .stApp div[data-testid="stSessionInfo"] span {
-        color: #ffffff; /* White text */
-    }
-
-    /* Widget styles */
-    .stButton {
-        background-color: #1877f2; /* Facebook blue */
-        color: #ffffff; /* White text */
-        border-radius: 8px; /* Rounded corners */
-        padding: 8px 16px; /* Adjust to your preference */
-    }
-
-    .stTextInput {
-        border-radius: 8px; /* Rounded corners */
-    }
-
-    /* Custom fonts (adjust font URLs if using custom fonts) */
-    .stApp {
-        font-family: 'Helvetica Neue', Arial, sans-serif;
+    @keyframes zoomIn {
+        0% {
+            transform: scale(2);
+            opacity: 1;
+        }
+        100% {
+            transform: scale(1);
+            opacity: 0;
+        }
     }
 
     </style>
@@ -59,12 +59,67 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-# Load your dataset
-data = pd.read_excel("bot.xlsx")
+# Function to show the main app and hide the splash screen on click
+def hide_splash_screen():
+    st.markdown(
+        """
+        <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            document.querySelector(".main-app").style.display = "block";
+            document.querySelector(".splash-screen").classList.add("zoom-in");
+        });
+        </script>
+        """,
+        unsafe_allow_html=True,
+    )
 
-# GIF URL or local file path
-gif_url = "original-4591cc3d8ca4a9f6cbe8081f7c6d16e0.gif"
-st.image(gif_url, use_column_width=True)
+# Splash screen
+st.markdown(
+    f"""
+    <div class="splash-screen" onclick="hide_splash_screen()">
+        <img src="{gif_url}" alt="Splash Screen GIF" style="max-width: 100%; max-height: 100%;">
+    </div>
+    """,
+    unsafe_allow_html=True,
+)
+
+# Main app
+with st.container():
+    st.markdown(
+        """
+        <style>
+        /* Styling for main app */
+        .main-app {
+            display: block;
+            transition: opacity 1s ease-in-out;
+        }
+
+        /* Set the opacity of main app to 0 initially */
+        .main-app.hidden {
+            opacity: 0;
+        }
+
+        /* Zoom-in animation for main app */
+        .main-app.zoom-in {
+            animation: zoomInMain 1s ease-in-out;
+            animation-fill-mode: forwards;
+        }
+
+        @keyframes zoomInMain {
+            0% {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+        </style>
+        <div class="main-app hidden">
+        """,
+        unsafe_allow_html=True,
+    )
 
 st.title("Get help center Links")
 
