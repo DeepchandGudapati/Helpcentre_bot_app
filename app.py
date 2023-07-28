@@ -52,22 +52,24 @@ st.markdown(
         background-color: #ffffff;
         border: 1px solid #dddddd;
         border-radius: 12px;
-        padding: 12px;
     }
 
     .suggestion-link {
         display: block;
-        margin-bottom: 8px;
+        margin: 8px 0; /* Adjust margin to create spacing between suggestions */
     }
 
     .suggestion-link a {
         color: #1877f2; /* Meta blue */
         text-decoration: none;
         font-weight: bold;
+        padding: 8px 16px; /* Add padding to make the suggestion links clickable */
+        display: block;
+        border-radius: 12px; /* Rounded corners for suggestion links */
     }
 
     .suggestion-link a:hover {
-        text-decoration: underline;
+        background-color: #f0f2f5; /* Add hover effect */
     }
 
     </style>
@@ -80,17 +82,6 @@ st.title("Get help center Links")
 
 # User input for description
 user_input = st.text_input("Enter description:", key="description_input")  # Add key to fix caching issue
-
-# Search suggestions based on the available descriptions
-if user_input:
-    suggestions = process.extract(user_input, data["description"], limit=5)
-    suggestions = [suggestion[0] for suggestion in suggestions if suggestion[1] >= 80]
-    st.markdown("<div class='suggestions-container'>", unsafe_allow_html=True)
-    st.write("Search Suggestions:")
-    for suggestion in suggestions:
-        link = data.loc[data["description"] == suggestion, "link"].iloc[0]
-        st.markdown(f"<div class='suggestion-link'><a href='{link}'>{suggestion}</a></div>", unsafe_allow_html=True)
-    st.markdown("</div>", unsafe_allow_html=True)
 
 # Find the link corresponding to the description
 if user_input:
@@ -105,3 +96,17 @@ if user_input:
 
     else:
         st.warning("No link found for the provided description.")
+
+# Search suggestions based on the available descriptions
+if user_input:
+    suggestions = process.extract(user_input, data["description"], limit=5)
+    suggestions = [suggestion[0] for suggestion in suggestions if suggestion[1] >= 80]
+    st.markdown("<div class='suggestions-container'>", unsafe_allow_html=True)
+    st.write("Search Suggestions:")
+    for suggestion in suggestions:
+        link = data.loc[data["description"] == suggestion, "link"].iloc[0]
+        st.markdown(
+            f"<div class='suggestion-link'><a href='{link}'>{suggestion}</a></div>",
+            unsafe_allow_html=True,
+        )
+    st.markdown("</div>", unsafe_allow_html=True)
