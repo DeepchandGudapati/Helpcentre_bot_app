@@ -63,7 +63,6 @@ st.markdown(
 data = pd.read_excel("bot.xlsx")
 
 # GIF URL or local file path
-gif_url = "https://dribbble.com/shots/21170520-Meta-Logo-Animation?utm_source=Clipboard_Shot&utm_campaign=Quangart0810&utm_content=Meta%20Logo%20Animation&utm_medium=Social_Share&utm_source=Clipboard_Shot&utm_campaign=Quangart0810&utm_content=Meta%20Logo%20Animation&utm_medium=Social_Share"  # Replace with your GIF URL or local file path
 
 st.image(gif_url, format="gif", use_column_width=True)
 st.title("Get help center Links")
