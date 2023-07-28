@@ -63,7 +63,7 @@ st.markdown(
 data = pd.read_excel("bot.xlsx")
 
 # GIF URL or local file path
-gif_url = "https://giphy.com/embed/oVCd7vRf5U8vQ8o2NP"  # Replace with your GIF URL or local file path
+gif_url = "https://tenor.com/en-GB/view/meta-facebook-logo-gif-23600374"  # Replace with your GIF URL or local file path
 
 st.image(gif_url, use_column_width=True)
 st.title("Get help center Links")
