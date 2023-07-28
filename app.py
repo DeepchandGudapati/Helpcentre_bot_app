@@ -79,7 +79,7 @@ st.markdown(
 
 # Load the splash screen GIF from your GitHub repository
 splash_screen_gif_url = "https://github.com/DeepchandGudapati/bot_app/blob/384a9807205f8df61c101b279f1917d2799097e5/original-4591cc3d8ca4a9f6cbe8081f7c6d16e0.gif"
-st.image(splash_screen_gif_url, use_column_width=True, format="GIF")
+st.image(splash_screen_gif_url, use_column_width=True)
 
 # Main app
 st.title("Get help center Links")
