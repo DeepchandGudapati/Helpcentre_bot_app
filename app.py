@@ -81,7 +81,7 @@ st.markdown(
 st.title("Get help center Links")
 
 # User input for description
-user_input = st.sidebar.text_input("Enter description:", key="description_input")  # Add key to fix caching issue
+user_input = st.text_input("Enter description:", key="description_input")  # Add key to fix caching issue
 
 # Find the link corresponding to the description
 if user_input:
@@ -100,12 +100,12 @@ if user_input:
 # Search suggestions based on the available descriptions
 if user_input:
     suggestions = process.extract(user_input, data["description"], limit=5)
-    st.sidebar.markdown("<div class='suggestions-container'>", unsafe_allow_html=True)
-    st.sidebar.write("Search Suggestions:")
+    st.markdown("<div class='suggestions-container'>", unsafe_allow_html=True)
+    st.write("Search Suggestions:")
     for suggestion in suggestions:
         link = data.loc[data["description"] == suggestion[0], "link"].iloc[0]
-        st.sidebar.markdown(
+        st.markdown(
             f"<div class='suggestion-link'><a href='{link}'>{suggestion[0]}</a></div>",
             unsafe_allow_html=True,
         )
-    st.sidebar.markdown("</div>", unsafe_allow_html=True)
+    st.markdown("</div>", unsafe_allow_html=True)
