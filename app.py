@@ -1,7 +1,6 @@
 import pandas as pd
 import streamlit as st
 from fuzzywuzzy import process
-from IPython.display import display, Image
 
 # Load your dataset
 data = pd.read_excel("bot.xlsx")
@@ -56,26 +55,33 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-# Function to show the main app and hide the splash screen on click
-def hide_splash_screen():
-    st.markdown(
-        """
-        <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            document.querySelector(".main-app").style.display = "block";
-            document.querySelector(".splash-screen").classList.add("zoom-in");
-        });
-        </script>
-        """,
-        unsafe_allow_html=True,
-    )
-
 # Splash screen
 st.markdown(
     f"""
     <div class="splash-screen" onclick="hide_splash_screen()">
         <img src="{gif_url}" alt="Splash Screen GIF" style="max-width: 100%; max-height: 100%;">
     </div>
+    """,
+    unsafe_allow_html=True,
+)
+
+# Function to show the main app and hide the splash screen on click
+st.markdown(
+    """
+    <script>
+    function hide_splash_screen() {
+        const splashScreen = document.querySelector(".splash-screen");
+        const mainApp = document.querySelector(".main-app");
+
+        mainApp.style.display = "block";
+        splashScreen.classList.add("zoom-in");
+
+        // Remove splash screen after the animation finishes
+        splashScreen.addEventListener("animationend", () => {
+            splashScreen.style.display = "none";
+        });
+    }
+    </script>
     """,
     unsafe_allow_html=True,
 )
