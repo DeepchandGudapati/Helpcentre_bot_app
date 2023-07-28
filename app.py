@@ -41,8 +41,10 @@ st.markdown(
     }
 
     .stTextInput {
+        border: none; /* Remove border */
         border-radius: 12px; /* Rounded corners */
         background-color: #ffffff; /* White background */
+        padding-left: 10px; /* Adjust left padding to align text in the input box */
     }
 
     /* Suggestions styling */
@@ -77,7 +79,7 @@ st.markdown(
 st.title("Get help center Links")
 
 # User input for description
-user_input = st.text_input("Enter description:")
+user_input = st.text_input("Enter description:", key="description_input")  # Add key to fix caching issue
 
 # Search suggestions based on the available descriptions
 if user_input:
